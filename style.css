@@ -1,0 +1,16 @@
+#new_forwarding_rule {
+    text-align: center;
+    padding: 1px;
+    border: 1px solid #CDCDCD;
+    background: white;
+    clear: both;
+}
+
+#new_forwarding_rule div {
+    background: #C7E7FF;
+    padding: 4px;
+}
+
+#new_forwarding_rule_form {
+    padding: 4px;
+}
