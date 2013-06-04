@@ -1,0 +1,15 @@
+{
+    "name": "kennisnet/forwarding-rules",
+    "type": "yourls-plugin",
+    "description": "yourls plugin that defines redirection rules",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Frank Matheron",
+            "email": "frankmatheron@gmail.com"
+        }
+    ],
+    "require": {
+
+    }
+}
