@@ -34,7 +34,7 @@ function fr_get_url_variants($host, $requestUri) {
             $variants[] = array('host' => $v['host'], 'requestUri' => $v['requestUri'] . '/');
         }
     }
-    return $variants;
+    return yourls_apply_filter('fr_request_variants', $variants);;
 }
 
 // applies the firt rule that matches the host and requestUri
