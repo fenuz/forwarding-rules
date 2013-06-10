@@ -15,6 +15,7 @@ $output .= <<<TEMPLATE
         <input type="button" id="add-rule-button" value="Add Rule" class="button" onclick="add_forwarding_rule();">
     </div></form>
 </div></div>
+<div class="forwarding-table-container">
 <table id="forwarding_table" class="tblSorter" cellpadding="0" cellspacing="1">
     <thead>
         <tr>
@@ -37,6 +38,7 @@ foreach($rules as $r) {
 $output .= <<<TEMPLATE
     </tbody>
 </table>
+</div>
 TEMPLATE;
 
 return $output;

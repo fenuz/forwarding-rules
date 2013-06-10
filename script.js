@@ -1,6 +1,6 @@
 // initialize
 $(document).ready(function() {
-    $('#forwarding_table').tablesorter();
+    $('#forwarding_table').dataTable();
 });
 
 // Add a new forwarding rule
@@ -8,9 +8,9 @@ function add_forwarding_rule() {
 	if( $('#add-rule-button').hasClass('disabled') ) {
 		return false;
 	}
-	var ndomain = $("#add-rule-domain").val();
-	var npattern = $("#add-rule-pattern").val();
-    var newurl = $("#add-rule-url").val();
+	var ndomain = $.trim($("#add-rule-domain").val());
+	var npattern = $.trim($("#add-rule-pattern").val());
+    var newurl = $.trim($("#add-rule-url").val());
 	var nonce = $("#nonce-add-rule").val();
     if ( !ndomain ) {
         return;
@@ -112,9 +112,9 @@ function hide_rule_edit(id) {
 // Save edition of a link
 function edit_rule_save(id) {
 	add_loading("#edit-rule-close-button-" + id);
-	var newdomain = $("#edit-rule-domain-" + id).val();
-	var newpattern = $("#edit-rule-pattern-" + id).val();
-	var newurl = $("#edit-rule-url-" + id).val();
+	var newdomain = $.trim($("#edit-rule-domain-" + id).val());
+	var newpattern = $.trim($("#edit-rule-pattern-" + id).val());
+	var newurl = $.trim($("#edit-rule-url-" + id).val());
     var nonce = $('#nonce-edit-rule-'+id).val();
 	$.getJSON(
 		ajaxurl,
