@@ -21,4 +21,18 @@
 
 #forwarding_table {
     margin: 1em 0 1em 0;
+    table-layout: fixed;
+}
+
+#forwarding_table th.actions {
+    width: 75px;
+}
+
+#forwarding_table th.timestamp {
+    width: 140px;
+}
+
+#forwarding_table td {
+    overflow: hidden;
+    white-space: nowrap;
 }

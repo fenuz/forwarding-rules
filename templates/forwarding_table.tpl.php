@@ -22,7 +22,7 @@ $output .= <<<TEMPLATE
             <th>Domain</th>
             <th>Source Pattern</th>
             <th>Destination Pattern</th>
-            <th>Date</th>
+            <th class="timestamp">Date</th>
 TEMPLATE;
 
 if (FR_SHOW_IP_COLUMN) {
@@ -33,7 +33,7 @@ if (FR_SHOW_CLICKS_COLUMN) {
 }
 
 $output .= <<<TEMPLATE
-            <th>Actions</th>
+            <th class="actions">Actions</th>
         </tr>
     </thead>
     <tbody>

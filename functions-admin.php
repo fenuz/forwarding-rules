@@ -124,7 +124,7 @@ function fr_html_add_row($id, $domain, $pattern, $url, $timestamp, $ip, $clicks)
         'ip' => $ip,
         'display_domain' => htmlentities($domain),
         'display_pattern' => htmlentities($pattern),
-        'display_url' => htmlentities(yourls_trim_long_string($url)),
+        'display_url' => htmlentities($url),
         'date' => date( 'M d, Y H:i', $timestamp+( YOURLS_HOURS_OFFSET * 3600 ) ),
         'clicks' => number_format( $clicks, 0, '', ''),
     );
