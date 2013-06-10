@@ -38,7 +38,7 @@ function fr_get_url_variants($host, $requestUri) {
 }
 
 // applies the firt rule that matches the host and requestUri
-function fr_match_rules($rules = array(), $host, $requestUri) {
+function fr_match_rules($rules, $host, $requestUri) {
     foreach ($rules as $r) {
         // first check if the domain name pattern matches the current hostname
         $hostRegex = fr_create_regex_pattern($r->domain);
@@ -61,14 +61,45 @@ function fr_match_rules($rules = array(), $host, $requestUri) {
 // returns the rules setup for the specified host
 function fr_get_rules($host) {
     global $ydb;
-    
-    // order rules by pattern lengths, if match in this order
-    // more specific patterns overrule less specific ones.
+
+    // retrieve all redirect rules that match the domain
     $sql =
         'SELECT `domain`, `id`, `pattern`, `url` FROM `'.FR_DB_RULES_TABLE.'`'.
-        ' WHERE "'.$ydb->escape($host).'" RLIKE CONCAT("(www\\.)?", REPLACE(`domain`, "*", ".*"))'.
-        ' ORDER BY LENGTH(`domain`), LENGTH(`pattern`) DESC'; 
-    return $ydb->get_results($sql);
+        ' WHERE "'.$ydb->escape($host).'" RLIKE CONCAT("(www\\.)?", REPLACE(`domain`, "*", ".*"))';
+    $rules = $ydb->get_results($sql);
+    if (!$rules) {
+        $rules = array();
+    }
+    
+    // when matching in this order, non wildcard patterns are matched before 
+    // wildcard patterns. this ensures that more specific rules overrule less
+    // specific rules.
+    uasort($rules, function($a, $b) {  
+        // order less wildcards before more wildcards
+        $wildcardsA = substr_count($a->domain, '*') + substr_count($a->pattern, '*');
+        $wildcardsB = substr_count($b->domain, '*') + substr_count($b->pattern, '*');
+        $wildcards = $wildcardsA - $wildcardsB;
+        if ($wildcards != 0) {
+            return $wildcards;
+        } 
+     
+        // order long domain patterns before short domains
+        $lenDomain = strlen($b->domain) - strlen($a->domain);
+        if ($lenDomain != 0) {
+            return $lenDomain;
+        }
+        
+        // order long resource patterns before short patterns
+        $lenPattern = strlen($b->pattern) - strlen($a->pattern);
+        if ($lenPattern != 0) {
+            return $lenPattern;
+        }
+        
+        // alphabetical order
+        return strcmp($a->pattern, $b->pattern);
+    });
+    
+    return $rules;
 }
 
 // create regex pattern based on the rule pattern
