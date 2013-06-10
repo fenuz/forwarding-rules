@@ -17,6 +17,16 @@ define('FR_VERSION', '1.0');
 define('FR_DB_VERSION', '1.0');
 define('FR_DB_RULES_TABLE', 'fr_rules');
 
+// config constant that can be used to hide the ip column
+if (!defined('FR_SHOW_IP_COLUMN')) {
+    define('FR_SHOW_IP_COLUMN', true);
+}
+
+// config constant that can be used to hide the clicks column
+if (!defined('FR_SHOW_CLICKS_COLUMN')) {
+    define('FR_SHOW_CLICKS_COLUMN', true);
+}
+
 // plugin activation hook (for db setup)
 yourls_add_action('activated_plugin', 'fr_activated_plugin');
 

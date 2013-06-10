@@ -23,8 +23,16 @@ $output .= <<<TEMPLATE
             <th>Source Pattern</th>
             <th>Destination Pattern</th>
             <th>Date</th>
-            <th>IP</th>
-            <th>Clicks</th>
+TEMPLATE;
+
+if (FR_SHOW_IP_COLUMN) {
+    $output .= "<th>IP</th>";    
+}
+if (FR_SHOW_CLICKS_COLUMN) {
+    $output .= "<th>Clicks</th>";    
+}
+
+$output .= <<<TEMPLATE
             <th>Actions</th>
         </tr>
     </thead>
