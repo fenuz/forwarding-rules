@@ -1,8 +1,16 @@
 <?php
 
+$colspan = 4;
+if (FR_SHOW_IP_COLUMN) {
+    $colspan++;
+}
+if (FR_SHOW_CLICKS_COLUMN) {
+    $colspan++;
+}
+
 $output = <<<ROW
 <tr id="edit-rule-$id" class="edit-row">
-    <td colspan="6">
+    <td colspan="$colspan">
         <strong>Domain</strong>:
         <input type="text" id="edit-rule-domain-$id" value="$domain" class="text" size="40">
         <strong>Src</strong>:
