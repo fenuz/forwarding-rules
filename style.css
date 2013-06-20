@@ -23,6 +23,9 @@
     margin: 1em 0 1em 0;
     table-layout: fixed;
 }
+#forwarding_table_wrapper {
+    overflow-x: auto;
+}
 
 #forwarding_table th.actions {
     width: 75px;

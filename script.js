@@ -1,6 +1,8 @@
 // initialize
 $(document).ready(function() {
-    $('#forwarding_table').dataTable();
+    $('#forwarding_table').dataTable({
+        "sDom": 'C<"clear">Rlfrtip'
+    });
 });
 
 // Add a new forwarding rule
