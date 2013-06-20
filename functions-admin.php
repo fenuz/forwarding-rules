@@ -28,7 +28,7 @@ function fr_ajax_add_rule() {
     if ($insert) {
         $id = $ydb->insert_id;
         $return['id'] = $id;
-        $return['message'] = 'Forwarding Rule Added!';
+        $return['message'] = 'Forwarding Rule Added: ' . htmlentities($domain . $pattern) . ' => ' . $url;
         $return['status'] = 'success';
         $return['domain'] = $domain;
         $return['pattern'] = $pattern;
