@@ -7,6 +7,9 @@ if (FR_SHOW_IP_COLUMN) {
 if (FR_SHOW_CLICKS_COLUMN) {
     $colspan++;
 }
+if (FR_SHOW_USER_COLUMN) {
+    $colspan++;
+}
 
 $output = <<<ROW
 <tr id="edit-rule-$id" class="edit-row">

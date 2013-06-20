@@ -14,7 +14,7 @@ require(dirname(__FILE__) . '/functions-admin.php');
 require(dirname(__FILE__) . '/functions-redirect.php');
 
 define('FR_VERSION', '1.0');
-define('FR_DB_VERSION', '1.0');
+define('FR_DB_VERSION', '1.1');
 define('FR_DB_RULES_TABLE', 'fr_rules');
 
 // config constant that can be used to hide the ip column
@@ -25,6 +25,11 @@ if (!defined('FR_SHOW_IP_COLUMN')) {
 // config constant that can be used to hide the clicks column
 if (!defined('FR_SHOW_CLICKS_COLUMN')) {
     define('FR_SHOW_CLICKS_COLUMN', true);
+}
+
+// config constant that can be used to hide the user column
+if (!defined('FR_SHOW_USER_COLUMN')) {
+    define('FR_SHOW_USER_COLUMN', true);
 }
 
 // plugin activation hook (for db setup)

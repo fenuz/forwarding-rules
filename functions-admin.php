@@ -20,7 +20,8 @@ function fr_ajax_add_rule() {
         ' `url` = "'.$ydb->escape($url).'",'.
         ' `timestamp` = "'.$ydb->escape($timestamp).'", '.
         ' `clicks` = 0, '.
-        ' `ip` = "'.$ip.'"';
+        ' `ip` = "'.$ip.'", '.
+        ' `user` = "'.$ydb->escape(YOURLS_USER).'"';
 
     $insert = $ydb->query($sql);
     $return = array();
@@ -33,7 +34,7 @@ function fr_ajax_add_rule() {
         $return['pattern'] = $pattern;
         $return['url'] = $url;
         $return['timestamp'] = $timestamp;
-        $return['html'] = fr_html_add_row($id, $domain, $pattern, $url, strtotime($timestamp), $ip, 0);
+        $return['html'] = fr_html_add_row($id, $domain, $pattern, $url, strtotime($timestamp), $ip, 0, YOURLS_USER);
     } else {
         $return['status'] = 'fail';
         $return['message'] = 'Failed to add forwarding rule';
@@ -59,7 +60,8 @@ function fr_ajax_edit_rule_save() {
         ' `pattern` = "'.$ydb->escape($pattern).'",'.
         ' `url` = "'.$ydb->escape($url).'",'.
         ' `timestamp` = "'.$ydb->escape($timestamp).'", '.
-        ' `ip` = "'.$ip.'"'.
+        ' `ip` = "'.$ip.'", '.
+        ' `user` = "'.$ydb->escape(YOURLS_USER).'"'.
         ' WHERE `id` = "'.$ydb->escape($id).'"';
 
     $update = $ydb->query($sql);
@@ -75,8 +77,9 @@ function fr_ajax_edit_rule_save() {
             'ip' => $rule->ip,
             'timestamp' => $rule->timestamp,
             'clicks' => $rule->clicks,
+            'user' => $rule->user
         );
-        $result['html'] = fr_html_add_row($id, $rule->domain, $rule->pattern, $rule->url, strtotime($timestamp), $rule->ip, $rule->clicks);
+        $result['html'] = fr_html_add_row($id, $rule->domain, $rule->pattern, $rule->url, strtotime($timestamp), $rule->ip, $rule->clicks, $rule->user);
         $result['message'] = 'Rule updated in the database';
     } else {
         $result['status'] = 'fail';
@@ -118,7 +121,7 @@ function fr_admin_rules_table_display() {
 }
 
 // render a row for the rule table
-function fr_html_add_row($id, $domain, $pattern, $url, $timestamp, $ip, $clicks) {
+function fr_html_add_row($id, $domain, $pattern, $url, $timestamp, $ip, $clicks, $user) {
     $vars = array(
         'id' => $id,
         'ip' => $ip,
@@ -127,6 +130,7 @@ function fr_html_add_row($id, $domain, $pattern, $url, $timestamp, $ip, $clicks)
         'display_url' => htmlentities($url),
         'date' => date( 'M d, Y H:i', $timestamp+( YOURLS_HOURS_OFFSET * 3600 ) ),
         'clicks' => number_format( $clicks, 0, '', ''),
+        'user' => $user ? htmlentities($user) : ''
     );
 
     $delete_link = yourls_nonce_url( 'delete_rule_'.$id,

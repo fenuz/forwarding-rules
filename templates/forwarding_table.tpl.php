@@ -31,6 +31,9 @@ if (FR_SHOW_IP_COLUMN) {
 if (FR_SHOW_CLICKS_COLUMN) {
     $output .= "<th>Clicks</th>";    
 }
+if (FR_SHOW_USER_COLUMN) {
+    $output .= "<th>User</th>";    
+}
 
 $output .= <<<TEMPLATE
             <th class="actions">Actions</th>
@@ -40,7 +43,7 @@ $output .= <<<TEMPLATE
 TEMPLATE;
 
 foreach($rules as $r) {
-    $output .= fr_html_add_row($r->id, $r->domain, $r->pattern, $r->url, strtotime( $r->timestamp ), $r->ip, $r->clicks);
+    $output .= fr_html_add_row($r->id, $r->domain, $r->pattern, $r->url, strtotime( $r->timestamp ), $r->ip, $r->clicks, $r->user);
 }
 
 $output .= <<<TEMPLATE

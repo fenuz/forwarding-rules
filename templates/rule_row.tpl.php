@@ -13,6 +13,9 @@ if (FR_SHOW_IP_COLUMN) {
 if (FR_SHOW_CLICKS_COLUMN) {
     $row .= "<td class=\"clicks\" title=\"$clicks\">$clicks</td>";    
 }
+if (FR_SHOW_USER_COLUMN) {
+    $row .= "<td class=\"user\" title=\"$clicks\">$user</td>";    
+}
 
 $row .= <<<ROW
     <td id="rule-actions-$id" class="actions">$action_links</td>

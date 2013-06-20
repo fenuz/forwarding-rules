@@ -34,8 +34,32 @@ function fr_install() {
         $ydb->query( $table_query );
     }
         
+    // add the user column (if it doesn't exist)
+    _fr_add_user_column();
+    
     // Insert data into tables
     yourls_update_option( 'fr_version', FR_VERSION );
     yourls_update_option( 'fr_db_version', FR_DB_VERSION ); 
+}
+
+/**
+ * Add the user column to the table if not added
+ *
+ * @param array $args 
+ */
+function _fr_add_user_column() {
+    global $ydb; 
+
+    $table = FR_DB_RULES_TABLE;
+    $results = $ydb->get_results("DESCRIBE $table");
+    $activated = false;
+    foreach($results as $r) {
+        if($r->Field == 'user') {
+            $activated = true;
+        }
+    }
+    if(!$activated) {
+        $ydb->query("ALTER TABLE `$table` ADD `user` VARCHAR(255) NULL");
+    }
 }
 
