@@ -1,7 +1,7 @@
 // initialize
 $(document).ready(function() {
     $('#forwarding_table').dataTable({
-        "sDom": 'C<"clear">Rlfrtip'
+        "sDom": 'Rlfrtip'
     });
 });
 
