@@ -1,8 +1,12 @@
 // initialize
-$(document).ready(function() {
+function initializeForwardingDataTable() {
     $('#forwarding_table').dataTable({
         "sDom": 'Rlfrtip'
     });
+};
+
+$(document).ready(function() {
+    initializeForwardingDataTable();
 });
 
 // Add a new forwarding rule
@@ -41,9 +45,10 @@ function add_forwarding_rule() {
         }, 
         function(data) {
             if (data.status === 'success') {
+                $('#forwarding_table').dataTable().fnDestroy();
                 $('#forwarding_table tbody').prepend(data.html).trigger("update");
                 zebra_forwarding_table();
-                increment();
+                initializeForwardingDataTable();
             }
 
             reset_forwarding_rule();
@@ -97,7 +102,7 @@ function remove_forwarding_rule(id) {
         function(data) {
             if (data.success === 1) {
                 $("#rule-" + id).fadeOut(function() {
-                    $(this).remove();
+                    $('#forwarding_table').dataTable().fnDeleteRow(this);
                     if ($('#forwarding_table tbody tr').length === 1) {
                         $('#nourl_found').css('display', '');
                     }
@@ -126,10 +131,7 @@ function zebra_forwarding_table() {
 
 // Cancel edition of a link
 function hide_rule_edit(id) {
-    $("#edit-rule-" + id).fadeOut(200, function() {
-        $(this).remove();
-        end_disable('#rule-actions-' + id + ' .button');
-    });
+    $("#edit-rule-" + id).remove();
 }
 
 // Save edition of a link
@@ -150,13 +152,15 @@ function edit_rule_save(id) {
             nonce: nonce
         },
         function(data) {
+            hide_rule_edit(id);
             if (data.status === 'success') {
+                $('#forwarding_table').dataTable().fnDestroy();
                 $('#rule-' + id).replaceWith(data.html);
+                initializeForwardingDataTable();
             }
             feedback(data.message, data.status);
             end_loading("#edit-rule-close-button-" + id);
             end_disable("#rule-actions-" + id + ' .button');
-            hide_rule_edit(id);
         }
     );
 }
